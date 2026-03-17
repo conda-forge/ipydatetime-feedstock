@@ -6,12 +6,12 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 9b083e08efef140c29091fe114ea2921f88989e56f0b5eecdde9ac0157bb0b10
 
 build:
   noarch: python
-  number: 0
+  number: 1
   script:
     - {{ PYTHON }} -c '__import__("os").unlink("pyproject.toml")'
     - {{ PYTHON }} -m pip install . -vv
@@ -27,12 +27,12 @@ requirements:
     - nodejs
   host:
     - jupyter-packaging
-    - python >=3.6
+    - python {{ python_min }}
     - pip
   run:
     - ipywidgets >=7.0.0
     - notebook
-    - python >=3.6
+    - python >={{ python_min }}
     - tzlocal
 
 test:
@@ -43,6 +43,7 @@ test:
   requires:
     - notebook
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/vidartf/ipydatetime
